@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jonathan Kutz | jkutz.com</title>
+  <meta name="description" content="Personal portal and landing page for Jonathan Kutz.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+	:root {
+	  --bg: #0b0f19;
+	  --card-bg: rgba(17, 24, 39, 0.7);
+	  --card-border: rgba(255, 255, 255, 0.08);
+	  --text-main: #f9fafb;
+	  --text-muted: #9ca3af;
+	  --accent: #38bdf8;
+	  --accent-glow: rgba(56, 189, 248, 0.15);
+	  --badge-bg: rgba(56, 189, 248, 0.1);
+	  --badge-border: rgba(56, 189, 248, 0.25);
+	}
+
+	* {
+	  box-sizing: border-box;
+	  margin: 0;
+	  padding: 0;
+	}
+
+	body {
+	  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+	  background-color: var(--bg);
+	  color: var(--text-main);
+	  min-height: 100vh;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  padding: 24px;
+	  overflow-x: hidden;
+	  position: relative;
+	}
+
+	/* Ambient background lighting */
+	.glow-layer {
+	  position: absolute;
+	  width: 600px;
+	  height: 600px;
+	  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(11, 15, 25, 0) 70%);
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  pointer-events: none;
+	  z-index: 0;
+	}
+
+	.card {
+	  position: relative;
+	  z-index: 1;
+	  width: 100%;
+	  max-width: 540px;
+	  background: var(--card-bg);
+	  backdrop-filter: blur(16px);
+	  -webkit-backdrop-filter: blur(16px);
+	  border: 1px solid var(--card-border);
+	  border-radius: 24px;
+	  padding: 48px 40px;
+	  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+	  text-align: center;
+	}
+
+	.status-badge {
+	  display: inline-flex;
+	  align-items: center;
+	  gap: 8px;
+	  padding: 6px 14px;
+	  border-radius: 9999px;
+	  background: var(--badge-bg);
+	  border: 1px solid var(--badge-border);
+	  color: var(--accent);
+	  font-size: 0.825rem;
+	  font-weight: 600;
+	  letter-spacing: 0.02em;
+	  margin-bottom: 28px;
+	}
+
+	.status-dot {
+	  width: 7px;
+	  height: 7px;
+	  border-radius: 50%;
+	  background-color: #34d399;
+	  box-shadow: 0 0 10px #34d399;
+	}
+
+	h1 {
+	  font-size: 2rem;
+	  font-weight: 700;
+	  letter-spacing: -0.03em;
+	  line-height: 1.2;
+	  margin-bottom: 8px;
+	}
+
+	.domain-tag {
+	  font-size: 0.95rem;
+	  color: var(--text-muted);
+	  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	  margin-bottom: 20px;
+	}
+
+	p {
+	  color: var(--text-muted);
+	  line-height: 1.6;
+	  font-size: 0.95rem;
+	  margin-bottom: 32px;
+	}
+
+	.links-grid {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 12px;
+	  margin-bottom: 32px;
+	}
+
+	.link-button {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	  padding: 14px 20px;
+	  background: rgba(255, 255, 255, 0.03);
+	  border: 1px solid var(--card-border);
+	  border-radius: 12px;
+	  color: var(--text-main);
+	  text-decoration: none;
+	  font-weight: 500;
+	  font-size: 0.95rem;
+	  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.link-button:hover {
+	  background: rgba(255, 255, 255, 0.07);
+	  border-color: rgba(255, 255, 255, 0.18);
+	  transform: translateY(-2px);
+	}
+
+	.link-button .icon-left {
+	  display: flex;
+	  align-items: center;
+	  gap: 12px;
+	}
+
+	.link-button svg {
+	  width: 18px;
+	  height: 18px;
+	  fill: currentColor;
+	  opacity: 0.7;
+	}
+
+	.link-button:hover svg {
+	  opacity: 1;
+	}
+
+	.link-arrow {
+	  opacity: 0.3;
+	  transition: transform 0.2s ease, opacity 0.2s ease;
+	}
+
+	.link-button:hover .link-arrow {
+	  opacity: 1;
+	  transform: translateX(3px);
+	}
+
+	.footer {
+	  font-size: 0.75rem;
+	  color: rgba(156, 163, 175, 0.6);
+	  border-top: 1px solid var(--card-border);
+	  padding-top: 24px;
+	  letter-spacing: 0.02em;
+	}
+
+	@media (max-width: 480px) {
+	  .card {
+		padding: 32px 24px;
+	  }
+	  h1 {
+		font-size: 1.75rem;
+	  }
+	}
+  </style>
+</head>
+<body>
+
+  <div class="glow-layer"></div>
+
+  <main class="card">
+	<div class="status-badge">
+	  <span class="status-dot"></span>
+	  Personal Domain & Services
+	</div>
+
+	<h1>Jonathan Kutz</h1>
+	<div class="domain-tag">jkutz.com</div>
+
+	<p>
+	  This domain is active and routes internal homelab services and email. New web projects are currently under development.
+	</p>
+
+	<div class="links-grid">
+	  <!-- Project / Business Site Link -->
+	  <a href="https://kutz.builders" class="link-button" target="_blank" rel="noopener noreferrer">
+		<div class="icon-left">
+		  <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+		  <span>Kutz Builders</span>
+		</div>
+		<span class="link-arrow">→</span>
+	  </a>
+
+	  <!-- Direct Email Contact Link -->
+	  <a href="mailto:soci.kutz@jkutz.com" class="link-button">
+		<div class="icon-left">
+		  <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+		  <span>Get in Touch</span>
+		</div>
+		<span class="link-arrow">→</span>
+	  </a>
+	</div>
+
+	<div class="footer">
+	  &copy; 2026 Jonathan Kutz. All rights reserved.
+	</div>
+  </main>
+
+</body>
+</html>
